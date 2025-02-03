@@ -13,11 +13,11 @@ def signInUser(request):
     phone=request.POST['phone']
     photo=request.FILES['photo']
     if Account.objects.filter(first_name=first_name,last_name=last_name).exists():
-        return JsonResponse({"type":"warning","message":"Please the first name and the last name is already exist !!"})
+        return JsonResponse({"type":"Warning","message":"Please the first name and the last name is already exist !!"})
     if Account.objects.filter(phone=phone).exists():
-        return JsonResponse({"type":"warning","message":"Please the phone is already exist !!"})
+        return JsonResponse({"type":"Warning","message":"Please the phone is already exist !!"})
     if Account.objects.filter(email=email).exists():
-        return JsonResponse({"type":"warning","message":"Please the Password is already exist !!"})
+        return JsonResponse({"type":"Warning","message":"Please the Password is already exist !!"})
     md5_hash = hashlib.md5()
     md5_hash.update(password.encode('utf-8'))
 
@@ -25,5 +25,5 @@ def signInUser(request):
     a=Account(first_name=first_name,last_name=last_name,email=email,password=md5_hash.hexdigest(),phone=phone,photo=photo)
     a.save()
 
-    return JsonResponse({"type":"success","message":"Ajouter avec success"})
+    return JsonResponse({"type":"Success","message":"Ajouter avec success"})
     

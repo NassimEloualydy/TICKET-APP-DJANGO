@@ -480,21 +480,40 @@ function signIn(){
     var phone=document.getElementById("phone").value;
     var pw=document.getElementById("pw").value;
     var photo=document.getElementById("photo").files[0];
-var xhr=new XMLHttpRequest();
-xhr.onreadystatechange=()=>{
-    if(this.status==200 && this.readyState==4){
-        alert(this.responseText);
-    }
-}
-xhr.open("POST","signInUser",true);
-var f=new FormData();
-f.append("first_name",first_name);
-f.append("last_name",last_name);
-f.append("email",email);
-f.append("phone",phone);
-f.append("pw",pw);
-f.append("photo",photo);
-        f.append("csrfmiddlewaretoken",token)
+    if(first_name!="" && last_name!="" && email!="" && phone!="" && pw!="" && document.getElementById("photo").files.length==1){
 
-xhr.send(f);
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(this.status==200 && this.readyState==4){
+                                var {message,type}=JSON.parse(this.responseText);
+                                if(type=="Success"){
+                            
+                            toastr.success(message,"success",{positionClass:"toast-bottom-right"});
+                            document.getElementById("first_name").value="";
+                            document.getElementById("last_name").value="";
+                            document.getElementById("email").value="";
+                            document.getElementById("phone").value="";
+                            document.getElementById("pw").value="";
+                        
+                            }
+                        if(type=="Warning")
+                             toastr.warning(message,"warning",{positionClass:"toast-bottom-right"});
+        
+            }
+        }
+        xhr.open("POST","signInUser",true);
+        var f=new FormData();
+        f.append("first_name",first_name);
+        f.append("last_name",last_name);
+        f.append("email",email);
+        f.append("phone",phone);
+        f.append("pw",pw);
+        f.append("photo",photo);
+                f.append("csrfmiddlewaretoken",token)
+        
+        xhr.send(f);
+    }else{
+        toastr.warning("Plase all the filds are required !!","warning",{positionClass:"toast-bottom-right"});
+
+    }
 }
