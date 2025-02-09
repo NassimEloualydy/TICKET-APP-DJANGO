@@ -517,3 +517,35 @@ function signIn(){
 
     }
 }
+function login(){
+    var email=document.getElementById("email").value;
+    var pw=document.getElementById("pw").value;
+    if(email!="" && pw!=""){
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(this.status==200 && this.readyState==4){
+
+                var {message,type}=JSON.parse(this.responseText);
+
+                if(type=="success"){
+        toastr.success(message,type,{positionClass:"toast-bottom-right"});
+                    
+                }
+                if(type=="warning"){
+                    toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                                
+                            }
+            
+            }
+        }
+        xhr.open("POST","loginUser",true);
+        var f=new FormData();
+        f.append("email",email);
+        f.append("pw",pw);
+        f.append("csrfmiddlewaretoken",token)
+
+        xhr.send(f);
+    }else{
+        toastr.warning("Pleas all the fields are required !!","warning",{positionClass:"toast-bottom-right"});
+    }
+}

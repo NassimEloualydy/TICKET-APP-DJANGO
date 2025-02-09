@@ -483,13 +483,18 @@ function signIn(){
     if(first_name!="" && last_name!="" && email!="" && phone!="" && pw!="" && document.getElementById("photo").files.length==1){
 
         var xhr=new XMLHttpRequest();
-        xhr.onreadystatechange=()=>{
+        xhr.onreadystatechange=function(){
             if(this.status==200 && this.readyState==4){
                                 var {message,type}=JSON.parse(this.responseText);
-                            alert(type)
                                 if(type=="Success"){
                             
                             toastr.success(message,"success",{positionClass:"toast-bottom-right"});
+                            document.getElementById("first_name").value="";
+                            document.getElementById("last_name").value="";
+                            document.getElementById("email").value="";
+                            document.getElementById("phone").value="";
+                            document.getElementById("pw").value="";
+                        
                             }
                         if(type=="Warning")
                              toastr.warning(message,"warning",{positionClass:"toast-bottom-right"});
@@ -510,5 +515,35 @@ function signIn(){
     }else{
         toastr.warning("Plase all the filds are required !!","warning",{positionClass:"toast-bottom-right"});
 
+    }
+}
+function login(){
+    var email=document.getElementById("email").value;
+    var pw=document.getElementById("pw").value;
+    if(email!="" && pw!=""){
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(this.status==400 && this.readyState==4){
+                var {type,message}=JSON.parse(this.responseText);
+                if(type=="success"){
+        toastr.success(message,type,{positionClass:"toast-bottom-right"});
+                    
+                }
+                if(type=="warning"){
+                    toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                                
+                            }
+            
+            }
+        }
+        xhr.open("POST","loginUser",true);
+        var f=new FormData();
+        f.append("email",email);
+        f.append("pw",pw);
+        f.append("csrfmiddlewaretoken",token)
+
+        xhr.send(f);
+    }else{
+        toastr.warning("Pleas all the fields are required !!","warning",{positionClass:"toast-bottom-right"});
     }
 }

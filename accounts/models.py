@@ -9,6 +9,7 @@ class Account(models.Model):
     phone=models.CharField(max_length=80)
     password=models.CharField(max_length=80)
     photo=models.ImageField(upload_to='photos/%y/%m/%d/')
-
+    status=models.CharField(max_length=40,default="Disconnecred")
+    
     def __str__(self):
         return self.first_name+" "+self.last_name

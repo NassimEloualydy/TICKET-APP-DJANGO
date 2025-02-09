@@ -1,0 +1,38 @@
+<!-- Section de menu -->
+<nav  class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" >
+    <div class="container">
+        <a class="navbar-brand fw-bolder" href="#">
+            <!-- En-tête du titre -->
+            Ticket App
+        </a>
+     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+        <!-- Bouton de menu -->
+     </button>
+     <div class="navbar-collapse collapse" id="navMenu">
+
+        <ul class="navbar-nav">
+
+
+        <!-- Testez si se trouve l'url '/contact', ajoutez le fw-bolder qui rend le texte en gras et le texte avec pour la couleur blanche -->
+
+            <!-- fin de test  -->
+
+
+        </ul>
+        <ul class="navbar-nav ms-auto">
+
+            {% if request.session.first_name %}
+            <li class='nav-item'><a href="{% url 'category' %}" class='nav-link active fw-bolder'>Category</a></li>  
+            <li class='nav-item'><a href="{% url 'logout' %}" class='nav-link active fw-bolder'>Log Out</a></li>  
+            {% else %}
+            <li class='nav-item'><a href="{% url '' %}" class='nav-link active fw-bolder'>Login</a></li>  
+            <li class='nav-item'><a href="{% url 'signin' %}" class='nav-link active fw-bolder'>Sign In</a></li>  
+            {% endif %}
+        </ul>
+
+     </div>
+</div>
+</nav>
+
+<!-- fin de menu -->
