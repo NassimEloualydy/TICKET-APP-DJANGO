@@ -93,6 +93,18 @@
 .tableResize{
   overflow: hidden;
 }
+#example_wrapper{
+  width: 90% !important;
+  margin-left: 5%;
+}
+.dt-search{
+  visibility: hidden !important;
+}
+#example_wrapper > div:nth-child(1) > div.d-md-flex.justify-content-between.align-items-center.dt-layout-start.col-md-auto.me-auto > div{
+  position: absolute !important;
+  right: 5% !important;
+}
+
 @media (max-width:700px){
   .tableResize{
     width: 90%;

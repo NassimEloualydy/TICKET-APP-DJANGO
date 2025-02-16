@@ -547,3 +547,4 @@ function login(){
         toastr.warning("Pleas all the fields are required !!","warning",{positionClass:"toast-bottom-right"});
     }
 }
+

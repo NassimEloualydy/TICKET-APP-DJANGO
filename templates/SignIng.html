@@ -2,6 +2,8 @@
 <!-- on appelle le base.html qui contient l'en-tête et le pied de page -->
 
 {% block content %}
+
+{% include "header.html" %}
 <section  class="bg-dark text-light p-5 text-center Header">
     <div class="container border border-white pb-3 rounded-3">
         <div class="p-2">
@@ -11,6 +13,7 @@
         </div>
     </div>
 </section>
+
 <sction class="m-3 py-5">
     <div class="container">
         <div class="row">
