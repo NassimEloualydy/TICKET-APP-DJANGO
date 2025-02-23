@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+<!-- on appelle le base.html qui contient l'en-tête et le pied de page -->
+
+
+{% block content %}
+{% include "header.html" %}
+<section  class="bg-dark text-light p-5 text-center Header">
+    <div class="container border border-white pb-3 rounded-3">
+        <div class="p-2">
+            <h3 class="titleDaisyLead fw-bolder">Staduims</h3>
+            <!-- declaration de token -->
+            {% csrf_token %}
+
+        </div>
+        <div className="container">
+          <form action="">
+              <div class="row text-center">
+                  <div class="col-md mt-2"><input type="text" id="name_search"     placeholder='Name' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="city_search"     placeholder='City' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="contry_search"     placeholder='Country' class="form-control" /></div>
+                </div>
+                <div class="row text-center">
+                <div class="col-md mt-2"><input type="text" id="location_search"     placeholder='Location' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="status_search"     placeholder='Status' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="nbr_places_search"     placeholder='Nombre Of Places' class="form-control" /></div>
+            </div>
+
+              <div class="row text-center">
+                  <div class="col-md mt-2">
+                      <input type="button" value="Search" onClick="getDataProducts()"  class="btn btn-dark w-100" />
+                  </div>
+              </div>
+          </form>
+      </div>
+    </div>
+</section>
+<section id="breadcrumb" class="mt-3 ml-5 text-center">
+
+        
+    <nav aria-label="breadcrumb" style="margin-left: 3%;">
+        <ol class="breadcrumb">
+        <ul onclick="window.location.href='./'" class="br-click breadcrumb-item">Home</ul>
+        <ul  class="breadcrumb-item active">Staduims</ul>                        
+        </ol>
+    </nav>
+    <hr style="width: 90%;margin-left: 5%;"/>
+</section>
+<section>
+    <div class="" style="position: absolute !important;left:5% !important;">
+      <div class="mt-0 mb-0">
+        <div class="col-md">
+          <input
+            type="button"
+            value="New"
+            data-bs-toggle="modal"
+            data-bs-target="#modelForm"
+            class="btn btn-dark"
+          />
+          <input
+          type="button"
+          value="Load Demo Data"
+          class="btn btn-dark"
+          onclick="loadDemoDataStades()"
+        />
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="modal fade" id="modelForm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Stade Form</h5>
+          <button
+            class="btn-close"
+            aria-label="close"
+            data-bs-dismiss="modal"
+            onClick="clearDataSrades()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form">
+            <div class="row">
+              <div class="col-md mt-2">
+                <div class="label-control">Photo Location</div>
+                <input
+                  type="file"
+                  name="name"
+                  id="photo_location"
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md mt-2">
+                <div class="label-control">Name</div>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">City</div>
+                  <input
+                  type="text"
+                  name="name"
+                  id="city"
+                  class="form-control"
+                />
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Country</div>
+                  <input
+                  type="text"
+                  name="name"
+                  id="country"
+                  class="form-control"
+                />
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Location</div>
+                  <input
+                  type="text"
+                  name="name"
+                  id="location"
+                  class="form-control"
+                />
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Number Of Places</div>
+                  <input
+                  type="text"
+                  name="name"
+                  id="number_of_places"
+                  class="form-control"
+                />
+               </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Status</div>
+                  <select name="" id="status" class="form-control">
+                    <option value="">Choose A Status</option>
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Partial">Partial</option>
+                    <option value="Need To Be Fixed">Need To Be Fixed</option>
+                  </select>
+               </div>
+              </div>
+
+            <div class="row">
+              <div class="col-md mt-2">
+                <input
+                  type="button"
+                  id="submitCategory"
+                  value="Submit"
+                  onClick="submitStade()"
+                  class="btn btn-dark"
+                  
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section className="py-5">
+    <div className="container">
+
+      <div className="row tableData">
+
+        <table id="example" class="table">
+            <thead>
+                <tr>
+                    <th class="text-start">Id</th>
+                    <th class="text-start">Name</th>
+                    <th class="text-start">City</th>
+                    <th class="text-start">Country</th>
+                    <th class="text-start">N.Places</th>
+                    <th class="text-start">Location</th>
+                    <th class="text-start">Status</th>
+
+                    <th class="text-start" style="width: 180px;">&nbsp;&nbsp;&nbsp;</th>
+
+            </thead>
+            <tbody id="dataStades">
+
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+
+</section>
+
+{% endblock %}

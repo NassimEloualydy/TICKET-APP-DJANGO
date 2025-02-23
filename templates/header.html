@@ -23,11 +23,12 @@
         <ul class="navbar-nav ms-auto">
 
             {% if request.session.first_name %}
+            <li class='nav-item'><a href="{% url 'stades' %}" class='nav-link active fw-bolder'>Stades</a></li>  
             <li class='nav-item'><a href="{% url 'category' %}" class='nav-link active fw-bolder'>Category</a></li>  
             <li class='nav-item'><a href="{% url 'logout' %}" class='nav-link active fw-bolder'>Log Out</a></li>  
             {% else %}
-            <li class='nav-item'><a href="{% url '' %}" class='nav-link active fw-bolder'>Login</a></li>  
-            <li class='nav-item'><a href="{% url 'signin' %}" class='nav-link active fw-bolder'>Sign In</a></li>  
+            <li class='nav-item'><a href="{% url 'login' %}" class='nav-link active fw-bolder'>Login</a></li>  
+            <li class='nav-item'><a href="{% url 'signInUser' %}" class='nav-link active fw-bolder'>Sign In</a></li>  
             {% endif %}
         </ul>
 
