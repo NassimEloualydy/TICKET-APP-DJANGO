@@ -17,15 +17,33 @@ def submitStades(request):
         location=request.POST['location']
         status=request.POST['status']
         number_of_places=request.POST['number_of_places']
-        
         photo=request.FILES['photo']
-        if Stade.objects.filter(name=name).exists():
-             return JsonResponse({"type":"warning","message":"Please the name is alredy exist !!"})
-        if Stade.objects.filter(location=location).exists():
-             return JsonResponse({"type":"warning","message":"Please the location is alredy exist !!"})
-        s=Stade(nbr_places=number_of_places,name=name,city=city,country=country,location=location,status=status,photo_location=photo)
-        s.save()
-        return JsonResponse({"type":"success","message":"Stade Added with success !!"})
+        id_stade=request.POST["id"]
+        if id_stade==False:                
+             if Stade.objects.filter(name=name).exists():
+                  return JsonResponse({"type":"warning","message":"Please the name is alredy exist !!"})
+             if Stade.objects.filter(location=location).exists():
+                  return JsonResponse({"type":"warning","message":"Please the location is alredy exist !!"})
+             s=Stade(nbr_places=number_of_places,name=name,city=city,country=country,location=location,status=status,photo_location=photo)
+             s.save()
+             return JsonResponse({"type":"success","message":"Stade Added with success !!"})
+        else:
+             if Stade.objects.filter(name=name).exclude(id=id_stade).exists():
+                  return JsonResponse({"type":"warning","message":"Please the name is alredy exist !!"})
+             if Stade.objects.filter(location=location).exclude(id=id_stade).exists():
+                  return JsonResponse({"type":"warning","message":"Please the location is alredy exist !!"})
+             s=Stade(nbr_places=number_of_places,name=name,city=city,country=country,location=location,status=status,photo_location=photo)
+             s=Stade.objects.filter(pk=id_stade).first()
+             s.name=name
+             s.nbr_places=number_of_places
+             s.city=city
+             s.country=country
+             s.location=location
+             s.status=status
+             s.photo_location=photo
+             s.save()
+             return JsonResponse({"type":"success","message":"Stade Updated with success !!"})
+              
 def get_data_stades(request):
         if request.session.get('first_name',None) is None:
              return JsonResponse({"type":"warning","message":"Unautorized User !!"})
@@ -87,11 +105,11 @@ def loadDemoData(request):
               s=Stade(nbr_places=nbr_places,name=name,city=city,country=country,location="location",status="Open")
               s.save()
         return JsonResponse({"type":"success","message":"Stade Added with success !!"})          #     print(nbr_places)
-          #     print(name)
-          #     print(country)
-          #     print(city)
-              
-                         # break
-               #     break
-          #     break
-        
+def deleteStade(request):        
+     if request.session.get('first_name',None) is None:
+             return JsonResponse({"type":"warning","message":"Unautorized User !!"})
+     id=request.POST['id']
+     s=Stade.objects.filter(pk=id).first()
+     s.delete()
+     return JsonResponse({"type":"success","message":"Deleted With Success !!"})
+     

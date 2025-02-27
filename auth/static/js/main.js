@@ -268,6 +268,7 @@ clearDataSrades()
  f.append("location",location);
  f.append("status",status);
  f.append("photo",photo);
+ f.append("id",idStade)
  xhr.send(f);
     }else{
         toastr.warning("Please all the fields are required !!","warning",{positionClass:"toast-bottom-right"});
@@ -281,6 +282,7 @@ function clearDataSrades(){
     document.getElementById("country").value="";
     document.getElementById("location").value="";
     document.getElementById("status").value="";
+    idStade=false
     get_data_stades();
 
 }
@@ -335,7 +337,7 @@ function get_data_stades(){
                             orderable: false,  // Disable ordering for this column
                             render: function (data, type, row) {
                                 // alert(JSON(row))
-                                return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteCategory("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataCategory("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
+                                return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteStade("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataStades("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
                                 // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
                             }}
                     ]          ,
@@ -389,4 +391,40 @@ clearDataSrades()
  f.append("csrfmiddlewaretoken",token)
  xhr.send(f);
    
+}
+function deleteStade(id){
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+    
+        if(this.status==200 && this.readyState==4){
+            var {message,type}=JSON.parse(this.responseText);
+    
+            if(type=="success"){
+    toastr.success(message,type,{positionClass:"toast-bottom-right"});
+                get_data_stades()
+            }
+            if(type=="warning"){
+                toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                            
+                        }
+    
+        }
+    }
+    xhr.open("POST","deleteStade",true);
+    var f=new FormData();
+    f.append("id",id);
+    f.append("csrfmiddlewaretoken",token)
+    
+    xhr.send(f)
+}
+var idStade=false
+function loadDataStades(data){
+    document.getElementById("name").value=data.name;
+    document.getElementById("city").value=data.city;
+    document.getElementById("country").value=data.country;
+    document.getElementById("location").value=data.location;
+    document.getElementById("status").value=data.status;
+    document.getElementById("number_of_places").value=data.nbr_places;
+
+   idStade=data.id
 }
