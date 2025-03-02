@@ -27,7 +27,7 @@
 
               <div class="row text-center">
                   <div class="col-md mt-2">
-                      <input type="button" value="Search" onClick="getDataProducts()"  class="btn btn-dark w-100" />
+                      <input type="button" value="Search" onClick="get_data_stades()"  class="btn btn-dark w-100" />
                   </div>
               </div>
           </form>
@@ -45,6 +45,41 @@
     </nav>
     <hr style="width: 90%;margin-left: 5%;"/>
 </section>
+  <!-- Dasbjoard -->
+  <secction class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+               <div class="card m-3">
+                    <div class="fw-bolder m-3">Number Of Stades by Contry</div>
+                    
+                    
+                    <div class="card-body">
+                        <div id="id_chart_nbr_sms_par_compagne">
+                            <canvas height="290" id="number_of_staduims_by_city"></canvas>                            
+
+                        </div>
+                    </div>
+               </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3">
+                  <div class="fw-bolder m-3">Number Of Stades by Status</div>
+                    
+                    
+                  <div class="card-body">
+                      <div id="id_chart_nbr_sms_par_compagne">
+                          <canvas height="290" id="number_of_staduims_by_state"></canvas>                            
+
+                      </div>
+                  </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</secction>
+
 <section>
     <div class="" style="position: absolute !important;left:5% !important;">
       <div class="mt-0 mb-0">

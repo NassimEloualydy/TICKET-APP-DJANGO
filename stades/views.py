@@ -112,4 +112,23 @@ def deleteStade(request):
      s=Stade.objects.filter(pk=id).first()
      s.delete()
      return JsonResponse({"type":"success","message":"Deleted With Success !!"})
-     
+def chart_number_of_staduims_by_city(request):
+      query="select s.country as city,count(*) from public.stades_stade s group by s.country;"
+      cursor=connection.cursor()
+      cursor.execute(query,())
+      rows = cursor.fetchall()
+        
+      columns = [col[0] for col in cursor.description]
+    
+      data = [dict(zip(columns, row)) for row in rows]
+      return JsonResponse({"type":"success","message":data})
+def chart_number_of_staduims_by_status(request):
+      query="select s.status,count(*) from public.stades_stade s group by s.status;"
+      cursor=connection.cursor()
+      cursor.execute(query,())
+      rows = cursor.fetchall()
+        
+      columns = [col[0] for col in cursor.description]
+    
+      data = [dict(zip(columns, row)) for row in rows]
+      return JsonResponse({"type":"success","message":data})

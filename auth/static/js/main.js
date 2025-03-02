@@ -330,7 +330,21 @@ function get_data_stades(){
                         { data: "status" ,
                             createdCell: function (td, cellData, rowData, row, col) {
                                 $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }, render: function (data, type, row) {
+                                // alert(JSON.stringify(row));
+                                if (row.status=="Open")
+                                return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Open</span>"
+                                if (row.status=="Closed")
+                                    return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #e76f51;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Closed</span>"
+                                if (row.status=="Partial")
+                                    return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #e9c46a;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Partial</span>"
+                                if (row.status=="Need To Be Fixed")
+                                    return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #264653;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Need To Be Fixed</span>"
+    
+                                // return "<span></span>"
+                                // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
                             }
+    
                         },
 
                         { data: null,   // No data binding for this column
@@ -428,3 +442,184 @@ function loadDataStades(data){
 
    idStade=data.id
 }
+function chart_number_of_staduims_by_city(){
+    var xhr=new XMLHttpRequest();
+    xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            var {message,type}=JSON.parse(this.responseText);
+        
+            var labels=new Array();
+            var values=new Array();
+            for(i=0;i<message.length;i++){
+               labels.push(message[i]['city'])
+               values.push(message[i]['count'])
+            }
+            dataRedar = {
+               labels:labels,
+               datasets: [
+                   {
+                 label: 'Number of the stades by city ',
+                 data: values,
+                 fill: true,
+                 backgroundColor: 
+                 [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)'
+                ],
+                 borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)'
+                ],
+                 pointBackgroundColor: 'rgb(255, 99, 132)',
+                 pointBorderColor: '#fff',
+                 pointHoverBackgroundColor: '#fff',
+                 pointHoverBorderColor: 'rgb(255, 99, 132)'
+               }
+           ]
+             };
+             var configRedar = {
+               type: 'bar',
+               data: dataRedar,
+               options: {
+                  responsive: true, // Enable responsiveness
+                  maintainAspectRatio: false,
+          
+                 elements: {
+                   line: {
+                     borderWidth: 3
+                   }
+                 },
+                 scales: {
+                  yAxes: [{
+                      display: true,
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }            
+               },
+             };
+             
+             if(number_of_staduims_by_city!=null){
+               number_of_staduims_by_city.destroy();
+           }
+           // document.getElementById('number_of_staduims_by_city')
+           number_of_staduims_by_city = new Chart(document.getElementById("number_of_staduims_by_city"),configRedar);
+       //   }
+        }
+    }
+    xhr.open("post","chart_number_of_staduims_by_city",true)
+    var f=new FormData();
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+
+ 
+    }
+ //exeucter la fonction si en entre sur le dashboard
+ if(document.getElementById("number_of_staduims_by_city")!=null){
+    chart_number_of_staduims_by_city();
+ }
+ var number_of_staduims_by_city = null; 
+ 
+
+ function chart_number_of_staduims_by_status(){
+    var xhr=new XMLHttpRequest();
+    xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            var {message,type}=JSON.parse(this.responseText);
+        
+            var labels=new Array();
+            var values=new Array();
+            for(i=0;i<message.length;i++){
+               labels.push(message[i]['status'])
+               values.push(message[i]['count'])
+            }
+            dataRedar = {
+               labels:labels,
+               datasets: [
+                   {
+                 label: 'Number of the stades by Status ',
+                 data: values,
+                 fill: true,
+                 backgroundColor: 
+                 [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)'
+                ],
+                 borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)'
+                ],
+                 pointBackgroundColor: 'rgb(255, 99, 132)',
+                 pointBorderColor: '#fff',
+                 pointHoverBackgroundColor: '#fff',
+                 pointHoverBorderColor: 'rgb(255, 99, 132)'
+               }
+           ]
+             };
+             var configRedar = {
+               type: 'bar',
+               data: dataRedar,
+               options: {
+                  responsive: true, // Enable responsiveness
+                  maintainAspectRatio: false,
+          
+                 elements: {
+                   line: {
+                     borderWidth: 3
+                   }
+                 },
+                 scales: {
+                  yAxes: [{
+                      display: true,
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }            
+               },
+             };
+             
+             if(number_of_staduims_by_state!=null){
+               number_of_staduims_by_state.destroy();
+           }
+           // document.getElementById('number_of_staduims_by_state')
+           number_of_staduims_by_state = new Chart(document.getElementById("number_of_staduims_by_state"),configRedar);
+       //   }
+        }
+    }
+    xhr.open("post","chart_number_of_staduims_by_status",true)
+    var f=new FormData();
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+
+ 
+    }
+ //exeucter la fonction si en entre sur le dashboard
+ if(document.getElementById("number_of_staduims_by_state")!=null){
+    chart_number_of_staduims_by_status();
+ }
+ var number_of_staduims_by_state = null; 
+ 
