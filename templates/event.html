@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+<!-- on appelle le base.html qui contient l'en-tête et le pied de page -->
+
+
+{% block content %}
+{% include "header.html" %}
+<section  class="bg-dark text-light p-5 text-center Header">
+    <div class="container border border-white pb-3 rounded-3">
+        <div class="p-2">
+            <h3 class="titleDaisyLead fw-bolder">Events</h3>
+            <!-- declaration de token -->
+            {% csrf_token %}
+
+        </div>
+        <div className="container">
+          <form action="">
+              <div class="row text-center">
+                  <div class="col-md mt-2"><input type="text" id="name_search"     placeholder='Name' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="date_search"     placeholder='Date' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="start_search"     placeholder='Start' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="End_search"     placeholder='End' class="form-control" /></div>
+                </div>
+                <div class="row text-center">
+                <div class="col-md mt-2"><input type="text" id="nbr_ticket_search"     placeholder='Number Of Ticket' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="state_search"     placeholder='State' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="stade_search"     placeholder='Stade' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="category_search"     placeholder='Category' class="form-control" /></div>
+            </div>
+
+              <div class="row text-center">
+                  <div class="col-md mt-2">
+                      <input type="button" value="Search" onClick="get_data_stades()"  class="btn btn-dark w-100" />
+                  </div>
+              </div>
+          </form>
+      </div>
+    </div>
+</section>
+<section id="breadcrumb" class="mt-3 ml-5 text-center">
+
+        
+    <nav aria-label="breadcrumb" style="margin-left: 3%;">
+        <ol class="breadcrumb">
+        <ul onclick="window.location.href='./'" class="br-click breadcrumb-item">Home</ul>
+        <ul  class="breadcrumb-item active">Events</ul>                        
+        </ol>
+    </nav>
+    <hr style="width: 90%;margin-left: 5%;"/>
+</section>
+  <!-- Dasbjoard -->
+  <secction class="py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+               <div class="card m-3">
+                    <div class="fw-bolder m-3">Number Of Stades by Contry</div>
+                    
+                    
+                    <div class="card-body">
+                        <div id="id_chart_nbr_sms_par_compagne">
+                            <canvas height="290" id="number_of_staduims_by_city"></canvas>                            
+
+                        </div>
+                    </div>
+               </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card m-3">
+                  <div class="fw-bolder m-3">Number Of Stades by Status</div>
+                    
+                    
+                  <div class="card-body">
+                      <div id="id_chart_nbr_sms_par_compagne">
+                          <canvas height="290" id="number_of_staduims_by_state"></canvas>                            
+
+                      </div>
+                  </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</secction>
+
+<section>
+    <div class="" style="position: absolute !important;left:5% !important;">
+      <div class="mt-0 mb-0">
+        <div class="col-md">
+          <input
+            type="button"
+            value="New"
+            data-bs-toggle="modal"
+            data-bs-target="#modelForm"
+            class="btn btn-dark"
+          />
+          <input
+          type="button"
+          value="Load Demo Data"
+          class="btn btn-dark"
+          onclick="loadDemoDataEvent()"
+        />
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="modal fade" id="modelForm">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>Event Form</h5>
+          <button
+            class="btn-close"
+            aria-label="close"
+            data-bs-dismiss="modal"
+            onClick="clearDataSrades()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="form">
+            <div class="row">
+              <div class="col-md mt-2">
+                <div class="label-control">Name</div>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  class="form-control"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md mt-2">
+                <div class="label-control">Date</div>
+                <input
+                  type="date"
+                  name="name"
+                  id="date"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Start</div>
+                  <input
+                  type="time"
+                  name="name"
+                  id="start"
+                  class="form-control"
+                />
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">End</div>
+                  <input
+                  type="time"
+                  name="name"
+                  id="end"
+                  class="form-control"
+                />
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Number Of Ticket</div>
+                  <input
+                  type="text"
+                  name="name"
+                  id="nbr_ticket"
+                  class="form-control"
+                />
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Status</div>
+                  <select name="" id="status" class="form-control">
+                    <option value="">Choose A Status</option>
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Stade</div>
+                  <select name="" id="stade" class="form-control">
+                  </select>
+               </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md mt-2">
+                  <div class="label-control">Category</div>
+                  <select name="" id="category" class="form-control">
+                  </select>
+               </div>
+              </div>
+
+            <div class="row">
+              <div class="col-md mt-2">
+                <input
+                  type="button"
+                  id="submitCategory"
+                  value="Submit"
+                  onClick="submitEvent()"
+                  class="btn btn-dark"
+                  
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section className="py-5">
+    <div className="container">
+
+      <div className="row tableData">
+
+        <table id="example" class="table">
+            <thead>
+                <tr>
+                    <th class="text-start">Id</th>
+                    <th class="text-start">Name</th>
+                    <th class="text-start">Date</th>
+                    <th class="text-start">Start</th>
+                    <th class="text-start">End</th>
+                    <th class="text-start">N.Ticket</th>
+                    <th class="text-start">State</th>
+                    <th class="text-start">Stade</th>
+                    <th class="text-start">Category</th>
+
+                    <th class="text-start" style="width: 180px;">&nbsp;&nbsp;&nbsp;</th>
+
+            </thead>
+            <tbody id="dataEvent">
+
+            </tbody>
+        </table>
+        
+    </div>
+</div>
+
+</section>
+
+{% endblock %}

@@ -623,3 +623,173 @@ function chart_number_of_staduims_by_city(){
  }
  var number_of_staduims_by_state = null; 
  
+ function get_data_events(){
+    
+    if(!document.getElementById("dataEvent"))
+        return
+    var name=document.getElementById("name_search").value;
+    var date=document.getElementById("date_search").value;
+    var start=document.getElementById("start_search").value;
+    var End=document.getElementById("End_search").value;
+    var nbr_ticket=document.getElementById("nbr_ticket_search").value;
+    var state=document.getElementById("state_search").value;
+    var stade=document.getElementById("stade_search").value;
+    var category=document.getElementById("category_search").value;
+    var xhr=new XMLHttpRequest();
+    xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            var {type,data_Categories,data_satded,data}=JSON.parse(this.responseText);
+            document.getElementById("stade").innerHTML=data_satded
+            document.getElementById("category").innerHTML=data_Categories
+            $('#example').DataTable({
+                data: data,
+                columns: [
+
+                    { data: "id" ,visible: false},
+
+                    { data: "name" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+                    { data: "date" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+                    { data: "time_start" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+                    { data: "time_end" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+                    { data: "nbr_ticket" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+
+                    { data: "state" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }, render: function (data, type, row) {
+                            // alert(JSON.stringify(row));
+                            if (row.state=="Open")
+                            return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Open</span>"
+                            if (row.state=="Closed")
+                                return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #e76f51;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Closed</span>"
+
+                            // return "<span></span>"
+                            // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
+                        }
+
+                    },
+                    { data: "stade" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+                    { data: "category" ,
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                        }
+                    },
+
+                    { data: null,   // No data binding for this column
+                        orderable: false,  // Disable ordering for this column
+                        render: function (data, type, row) {
+                            // alert(JSON(row))
+                            return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteStade("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataStades("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
+                            // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
+                        }}
+                ]          ,
+                stateSave: true,
+                "bDestroy": true,
+                  });
+        }
+    }
+    xhr.open("post","get_data_events",true)
+    var f=new FormData();
+    f.append("name",name);
+    f.append("date",date);
+    f.append("start",start);
+    f.append("End",End);
+    f.append("nbr_ticket",nbr_ticket);
+    f.append("state",state);
+    f.append("stade",stade);
+    f.append("category",category);
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+
+ }
+ function submitEvent(){
+    var name=document.getElementById("name").value;
+    var date=document.getElementById("date").value;
+    var start=document.getElementById("start").value;
+    var end=document.getElementById("end").value;
+    var nbr_ticket=document.getElementById("nbr_ticket").value;
+    var status=document.getElementById("status").value;
+    var stade=document.getElementById("stade").value;
+    var category=document.getElementById("category").value;
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+    
+        if(this.status==200 && this.readyState==4){
+            var {message,type}=JSON.parse(this.responseText);
+    
+            if(type=="success"){
+    toastr.success(message,type,{positionClass:"toast-bottom-right"});
+                get_data_stades()
+            }
+            if(type=="warning"){
+                toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                            
+                        }
+    
+        }
+    }
+    xhr.open("POST","submitEvent",true);
+    var f=new FormData();
+    f.append("name",name);
+    f.append("date",date);
+    f.append("start",start);
+    f.append("end",end);
+    f.append("nbr_ticket",nbr_ticket);
+    f.append("status",status);
+    f.append("stade",stade);
+    f.append("category",category);
+    f.append("csrfmiddlewaretoken",token)
+    
+    xhr.send(f)    
+ }
+ function loadDemoDataEvent(){
+    var xhr=new XMLHttpRequest();
+
+    xhr.onreadystatechange=function(){
+       if(this.status==200 && this.readyState==4){
+           var {message,type}=JSON.parse(this.responseText);
+   
+           if(type=="success"){
+   toastr.success(message,type,{positionClass:"toast-bottom-right"});
+   // get_data_category()
+   clearDataSrades()
+           }
+           if(type=="warning"){
+               toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                           
+                       }
+       
+   
+       }
+    }
+    xhr.open("post","loadDemoDataEvent",true);
+    var f=new FormData();  
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+     
+ }

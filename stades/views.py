@@ -9,6 +9,7 @@ import json
 def stades(request):
         return render(request,"stades.html")
 def submitStades(request):
+     
         if request.session.get('first_name',None) is None:
              return JsonResponse({"type":"warning","message":"Unautorized User !!"})
         name=request.POST['name']

@@ -23,6 +23,7 @@
         <ul class="navbar-nav ms-auto">
 
             {% if request.session.first_name %}
+            <li class='nav-item'><a href="{% url 'events' %}" class='nav-link active fw-bolder'>Events</a></li>  
             <li class='nav-item'><a href="{% url 'stades' %}" class='nav-link active fw-bolder'>Stades</a></li>  
             <li class='nav-item'><a href="{% url 'category' %}" class='nav-link active fw-bolder'>Category</a></li>  
             <li class='nav-item'><a href="{% url 'logout' %}" class='nav-link active fw-bolder'>Log Out</a></li>  

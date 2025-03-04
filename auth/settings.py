@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Event.apps.EventConfig',
     'stades.apps.StadesConfig',
     'category.apps.CategoryConfig',
     'accounts.apps.AccountsConfig',
