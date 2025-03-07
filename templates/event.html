@@ -29,7 +29,7 @@
 
               <div class="row text-center">
                   <div class="col-md mt-2">
-                      <input type="button" value="Search" onClick="get_data_stades()"  class="btn btn-dark w-100" />
+                      <input type="button" value="Search" onClick="get_data_events()"  class="btn btn-dark w-100" />
                   </div>
               </div>
           </form>
@@ -51,20 +51,20 @@
   <secction class="py-4">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                <div class="card m-3">
-                    <div class="fw-bolder m-3">Number Of Stades by Contry</div>
+                    <div class="fw-bolder m-3">Number Events By Stade</div>
                     
                     
                     <div class="card-body">
                         <div id="id_chart_nbr_sms_par_compagne">
-                            <canvas height="290" id="number_of_staduims_by_city"></canvas>                            
+                            <canvas height="290" id="number_of_event_by_stade"></canvas>                            
 
                         </div>
                     </div>
                </div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="card m-3">
                   <div class="fw-bolder m-3">Number Of Stades by Status</div>
                     
@@ -77,7 +77,7 @@
                   </div>
 
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </secction>
@@ -95,6 +95,8 @@
           />
           <input
           type="button"
+          
+          id="loadDemoData_Event"
           value="Load Demo Data"
           class="btn btn-dark"
           onclick="loadDemoDataEvent()"
@@ -113,7 +115,7 @@
             class="btn-close"
             aria-label="close"
             data-bs-dismiss="modal"
-            onClick="clearDataSrades()"
+            onClick="clearDataEvent()"
           ></button>
         </div>
         <div class="modal-body">

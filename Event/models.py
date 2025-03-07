@@ -8,7 +8,7 @@ from stades.models import Stade
 
 # Create your models here.
 class Event(models.Model):
-    name=models.CharField(max_length=50)
+    name=models.CharField(max_length=400)
     date=models.DateField()
     time_start=models.TimeField()
     time_end=models.TimeField()

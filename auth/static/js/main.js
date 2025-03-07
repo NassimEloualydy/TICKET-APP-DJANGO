@@ -704,7 +704,7 @@ function chart_number_of_staduims_by_city(){
                         orderable: false,  // Disable ordering for this column
                         render: function (data, type, row) {
                             // alert(JSON(row))
-                            return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteStade("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataStades("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
+                            return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteEvent("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataEvent("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
                             // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
                         }}
                 ]          ,
@@ -764,10 +764,11 @@ function chart_number_of_staduims_by_city(){
     f.append("stade",stade);
     f.append("category",category);
     f.append("csrfmiddlewaretoken",token)
-    
+    f.append("id",idEvent)
     xhr.send(f)    
  }
  function loadDemoDataEvent(){
+    document.getElementById("loadDemoData_Event").disabled=true;
     var xhr=new XMLHttpRequest();
 
     xhr.onreadystatechange=function(){
@@ -776,8 +777,9 @@ function chart_number_of_staduims_by_city(){
    
            if(type=="success"){
    toastr.success(message,type,{positionClass:"toast-bottom-right"});
-   // get_data_category()
-   clearDataSrades()
+   document.getElementById("loadDemoData_Event").disabled=false;
+
+   get_data_events()
            }
            if(type=="warning"){
                toastr.warning(message,type,{positionClass:"toast-bottom-right"});
@@ -793,3 +795,167 @@ function chart_number_of_staduims_by_city(){
     xhr.send(f);
      
  }
+ function deleteEvent(id){
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+    
+        if(this.status==200 && this.readyState==4){
+            var {message,type}=JSON.parse(this.responseText);
+    
+            if(type=="success"){
+    toastr.success(message,type,{positionClass:"toast-bottom-right"});
+                get_data_events()
+            }
+            if(type=="warning"){
+                toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                            
+                        }
+    
+        }
+    }
+    xhr.open("POST","deleteEvent",true);
+    var f=new FormData();
+    f.append("id",id);
+    f.append("csrfmiddlewaretoken",token)
+    
+    xhr.send(f)  
+ }
+ var idEvent=false
+ function loadDataEvent(data){
+    const selectElement=document.getElementById("stade")
+    const options = selectElement.options;
+
+for (let i = 0; i < options.length; i++) {
+    const option = options[i];
+    const optionText = option.innerHTML;
+    if(option.innerHTML==data.stade){
+        document.getElementById("stade").value=option.value;
+        break
+    }
+}
+
+const selectElementCategory=document.getElementById("category")
+const optionsCategory = selectElement.options;
+
+for (let i = 0; i < options.length; i++) {
+const option = options[i];
+const optionText = option.innerHTML;
+if(option.innerHTML==data.category){
+    document.getElementById("category").value=option.value;
+    break
+}
+}
+
+    document.getElementById("name").value=data.name;
+    document.getElementById("date").value=data.date;
+    document.getElementById("start").value=data.time_start;
+    document.getElementById("end").value=data.time_end;
+    document.getElementById("nbr_ticket").value=data.nbr_ticket;
+    document.getElementById("status").value=data.state;
+    idEvent=data.id  
+    
+}
+function clearDataEvent(){
+    document.getElementById("name").value="";
+    document.getElementById("date").value="";
+    document.getElementById("start").value="";
+    document.getElementById("end").value="";
+    document.getElementById("nbr_ticket").value="";
+    document.getElementById("status").value="";
+    document.getElementById("stade").value="";
+    document.getElementById("category").value="";
+
+
+    idEvent=false  
+
+}
+
+function chart_number_of_event_by_stade(){
+    var xhr=new XMLHttpRequest();
+    xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            var {message,type}=JSON.parse(this.responseText);
+        
+            var labels=new Array();
+            var values=new Array();
+            for(i=0;i<message.length;i++){
+               labels.push(message[i]['name'])
+               values.push(message[i]['count'])
+            }
+            dataRedar = {
+               labels:labels,
+               datasets: [
+                   {
+                 label: 'Number of the Event by Stade ',
+                 data: values,
+                 fill: true,
+                 backgroundColor: 
+                 [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)'
+                ],
+                 borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)'
+                ],
+                 pointBackgroundColor: 'rgb(255, 99, 132)',
+                 pointBorderColor: '#fff',
+                 pointHoverBackgroundColor: '#fff',
+                 pointHoverBorderColor: 'rgb(255, 99, 132)'
+               }
+           ]
+             };
+             var configRedar = {
+               type: 'bar',
+               data: dataRedar,
+               options: {
+                  responsive: true, // Enable responsiveness
+                  maintainAspectRatio: false,
+          
+                 elements: {
+                   line: {
+                     borderWidth: 3
+                   }
+                 },
+                 scales: {
+                  yAxes: [{
+                      display: true,
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }            
+               },
+             };
+             
+             if(number_of_event_by_stade!=null){
+               number_of_event_by_stade.destroy();
+           }
+           // document.getElementById('number_of_event_by_stade')
+           number_of_event_by_stade = new Chart(document.getElementById("number_of_event_by_stade"),configRedar);
+       //   }
+        }
+    }
+    xhr.open("post","chart_number_of_event_by_stade",true)
+    var f=new FormData();
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+
+ 
+    }
+ //exeucter la fonction si en entre sur le dashboard
+ if(document.getElementById("number_of_event_by_stade")!=null){
+    chart_number_of_event_by_stade();
+ }
+ var number_of_event_by_stade = null; 
