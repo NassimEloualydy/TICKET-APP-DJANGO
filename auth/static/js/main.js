@@ -642,6 +642,7 @@ function chart_number_of_staduims_by_city(){
             var {type,data_Categories,data_satded,data}=JSON.parse(this.responseText);
             document.getElementById("stade").innerHTML=data_satded
             document.getElementById("category").innerHTML=data_Categories
+            chart_number_of_event_by_stade()
             $('#example').DataTable({
                 data: data,
                 columns: [
@@ -959,3 +960,25 @@ function chart_number_of_event_by_stade(){
     chart_number_of_event_by_stade();
  }
  var number_of_event_by_stade = null; 
+
+ function get_data_ticket(){
+    if(!document.getElementById('dataTicket'))
+        return
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+    
+        if(this.status==200 && this.readyState==4){
+            var {data_users,data_events}=JSON.parse(this.responseText);
+            document.getElementById("saller").innerHTML=data_users
+            document.getElementById("event").innerHTML=data_events
+
+
+        }
+    }
+    xhr.open("POST","get_data_ticket",true);
+    var f=new FormData();
+    f.append("csrfmiddlewaretoken",token)
+    
+    xhr.send(f)  
+   
+ }

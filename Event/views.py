@@ -99,6 +99,7 @@ def submitEvent(request):
          return JsonResponse({"type":"success","message":"Event Added with success !!"})
                
 def loadDemoData(request):
+
     if request.session.get('first_name',None) is None:
       return JsonResponse({"type":"warning","message":"Unautorized User !!"})
     url="https://www.fanpass.net/all-sport-events-tickets"
@@ -164,5 +165,4 @@ def chart_number_of_event_by_stade(request):
       columns = [col[0] for col in cursor.description]
     
       data = [dict(zip(columns, row)) for row in rows]
-      print(data)
       return JsonResponse({"type":"success","message":data})

@@ -25,6 +25,7 @@ urlpatterns = [
     path('',include('category.urls')),   
     path('',include('stades.urls')),  
     path('',include('Event.urls')),  
+    path('',include('Ticket.urls'))
 
 
     

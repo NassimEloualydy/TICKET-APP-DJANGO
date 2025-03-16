@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Account
 from django.http import JsonResponse
 import hashlib
+
 # Create your views here.
 def logout(request):
     return 
