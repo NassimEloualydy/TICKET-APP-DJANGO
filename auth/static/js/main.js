@@ -982,3 +982,117 @@ function chart_number_of_event_by_stade(){
     xhr.send(f)  
    
  }
+ var idTicket="";
+ function clearDataTicket(){
+    document.getElementById("name").value="";
+    document.getElementById("date").value="";
+    document.getElementById("availble").value="";
+    document.getElementById("desired_price").value="";
+    document.getElementById("cost_price").value="";
+    document.getElementById("status").value="";
+    document.getElementById("event").value="";
+    document.getElementById("saller").value="";
+ }
+ function submitTicket(){
+    var name=document.getElementById("name").value;
+    var date=document.getElementById("date").value;
+    var availble=document.getElementById("availble").value;
+    var desired_price=document.getElementById("desired_price").value;
+    var cost_price=document.getElementById("cost_price").value;
+    var status=document.getElementById("status").value;
+    var event=document.getElementById("event").value;
+    var saller=document.getElementById("saller").value;
+    var xhr=new XMLHttpRequest();
+   
+    xhr.onreadystatechange=function(){
+       if(this.status==200 && this.readyState==4){
+           var {message,type}=JSON.parse(this.responseText);
+   
+           if(type=="success"){
+   toastr.success(message,type,{positionClass:"toast-bottom-right"});
+   clearDataTicket();
+   get_data_tickets()
+               
+           }
+           if(type=="warning"){
+               toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                           
+                       }
+       
+   
+       }
+    }
+    xhr.open("post","submitTicket",true);
+    var f=new FormData();  
+    f.append("csrfmiddlewaretoken",token)
+     f.append("name",name);
+     f.append("date",date);
+     f.append("availble",availble);
+     f.append("desired_price",desired_price);
+     f.append("cost_price",cost_price);
+     f.append("status",status);
+     f.append("event",event);
+     f.append("saller",saller);
+    f.append("id",idTicket)
+    xhr.send(f);  
+ }
+ function get_data_tickets(){
+      if(!document.getElementById("dataTicket"))
+        return 
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.status==200 && this.readyState==4){
+            var {type,message}=JSON.parse(this.responseText);
+            if(type=="success"){
+                $('#example').DataTable({
+                    data: message,
+                    columns: [
+    
+                        { data: "id" ,visible: false},
+                        { data: "parent_id" ,visible: false},
+    
+                        { data: "name" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }
+                        },
+                        { data: "parent" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }
+                        },
+
+                        { data: null,   // No data binding for this column
+                            orderable: false,  // Disable ordering for this column
+                            render: function (data, type, row) {
+                                // alert(JSON(row))
+                                return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteCategory("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataCategory("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
+                                // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
+                            }}
+                    ]          ,
+                    stateSave: true,
+                    "bDestroy": true,
+                      });
+    
+                }
+            if(type=="warning"){
+                toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                            
+                        }
+        
+        }
+    }
+    xhr.open("POST","get_data_tickets",true);
+    var f=new FormData();
+    f.append("name",document.getElementById("name_search").value);
+    f.append("date",document.getElementById("date_search").value);
+    f.append("availble",document.getElementById("availble_search").value);
+    f.append("desired_price",document.getElementById("desired_price_search").value);
+    f.append("corst_price",document.getElementById("corst_price_search").value);
+    f.append("status",document.getElementById("status_search").value);
+    f.append("event",document.getElementById("event_search").value);
+    f.append("saller",document.getElementById("saller_search").value);
+    f.append("csrfmiddlewaretoken",token)
+
+    xhr.send(f);     
+ }

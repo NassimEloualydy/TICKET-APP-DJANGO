@@ -17,19 +17,19 @@
               <div class="row text-center">
                   <div class="col-md mt-2"><input type="text" id="name_search"     placeholder='Name' class="form-control" /></div>
                   <div class="col-md mt-2"><input type="text" id="date_search"     placeholder='Date' class="form-control" /></div>
-                  <div class="col-md mt-2"><input type="text" id="start_search"     placeholder='Start' class="form-control" /></div>
-                  <div class="col-md mt-2"><input type="text" id="End_search"     placeholder='End' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="availble_search"     placeholder='Availble' class="form-control" /></div>
+                  <div class="col-md mt-2"><input type="text" id="desired_price_search"     placeholder='Desired Price' class="form-control" /></div>
                 </div>
                 <div class="row text-center">
-                <div class="col-md mt-2"><input type="text" id="nbr_ticket_search"     placeholder='Number Of Ticket' class="form-control" /></div>
-                <div class="col-md mt-2"><input type="text" id="state_search"     placeholder='State' class="form-control" /></div>
-                <div class="col-md mt-2"><input type="text" id="stade_search"     placeholder='Stade' class="form-control" /></div>
-                <div class="col-md mt-2"><input type="text" id="category_search"     placeholder='Category' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="corst_price_search"     placeholder='Cost Price' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="status_search"     placeholder='State' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="event_search"     placeholder='Event' class="form-control" /></div>
+                <div class="col-md mt-2"><input type="text" id="saller_search"     placeholder='Saller' class="form-control" /></div>
             </div>
 
               <div class="row text-center">
                   <div class="col-md mt-2">
-                      <input type="button" value="Search" onClick="get_data_events()"  class="btn btn-dark w-100" />
+                      <input type="button" value="Search" onClick="get_data_tickets()"  class="btn btn-dark w-100" />
                   </div>
               </div>
           </form>
@@ -207,7 +207,7 @@
                   type="button"
                   id="submitCategory"
                   value="Submit"
-                  onClick="submitEvent()"
+                  onClick="submitTicket()"
                   class="btn btn-dark"
                   
                 />

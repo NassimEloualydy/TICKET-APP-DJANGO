@@ -48,4 +48,36 @@ def get_data_ticket(request):
     
     return JsonResponse({"data_users":data_users,"data_events":data_events})
 
-    
+def submitTicket(request):
+     if request.session.get('first_name',None) is None:
+             return JsonResponse({"type":"warning","message":"Unautorized User !!"})
+     name=request.POST['name']
+     date=request.POST['date']
+     availble=request.POST['availble']
+     desired_price=request.POST['desired_price']
+     status=request.POST['status']
+     event=request.POST['event']
+     saller=request.POST['saller']
+     cost_price=request.POST['cost_price']
+     s=Account.objects.filter(pk=saller).first()
+     e=Event.objects.filter(pk=event).first()
+     if Ticket.objects.filter(name=name,date=date,saller=s,event=e).exists():
+        return JsonResponse({"message":"The ticket is already exist !!","type":"warning"})
+     data=Ticket(name=name,date=date,availble=availble,desired_price=desired_price,status=status,event=e,saller=s,cost_price=cost_price)
+     data.save()
+     return JsonResponse({"message":"Added With Success ","type":"success"})
+def get_data_tickets(request):
+     if request.session.get('first_name',None) is None:
+             return JsonResponse({"type":"warning","message":"Unautorized User !!"})
+     name=request.POST['name']
+     date=request.POST['date']
+     availble=request.POST['availble']
+     desired_price=request.POST['desired_price']
+     corst_price=request.POST['corst_price']
+     status=request.POST['status']
+     event=request.POST['event']
+     saller=request.POST['saller']
+     query="""
+      select t.id,t.name,t.date,t.availble,t.desired_price,
+      t.corst_price,t.status,
+"""
