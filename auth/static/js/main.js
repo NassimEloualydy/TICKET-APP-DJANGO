@@ -1,3 +1,61 @@
+var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+    },
+    breakpoints: {
+    "@0.00": {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    "@0.75": {
+      slidesPerView: 2,
+      spaceBetween: 20,
+    },
+    "@1.00": {
+      slidesPerView: 3,
+      spaceBetween: 40,
+    },
+    "@1.50": {
+      slidesPerView: 4,
+      spaceBetween: 50,
+    },
+    },
+    });
+    const boxes=document.querySelectorAll(".boxAnime")
+    window.addEventListener('scroll',checkBoxes)
+    checkBoxes()
+    function checkBoxes(){
+        const triggerBottom=window.innerHeight/5*4
+        boxes.forEach(box=>{
+            const boxTop=box.getBoundingClientRect().top
+            if(boxTop<triggerBottom){
+                box.classList.add("show")
+            }else{
+                box.classList.remove("show")
+    
+            }
+        })
+    }
+    
+    
+    let valueDisplayDays=document.querySelectorAll(".num");
+    let interval=5000;
+    valueDisplayDays.forEach((valueDisplay)=>{
+       let startValue=0;
+       let endValue=parseInt(valueDisplay.getAttribute("data-val"));
+       let duration=Math.floor(interval/endValue);
+       let counter=setInterval(function(){
+        startValue+=1;
+        valueDisplay.textContent="+"+startValue;
+        if(startValue==endValue){
+          clearInterval(counter);
+        }
+       },duration)
+    });
+    
 var token=document.getElementsByName('csrfmiddlewaretoken')[0].value
 function signIn(){
     var first_name=document.getElementById("first_name").value;
@@ -992,7 +1050,8 @@ function chart_number_of_event_by_stade(){
     document.getElementById("status").value="";
     document.getElementById("event").value="";
     document.getElementById("saller").value="";
- }
+    idTciekt=0
+}
  function submitTicket(){
     var name=document.getElementById("name").value;
     var date=document.getElementById("date").value;
@@ -1033,9 +1092,11 @@ function chart_number_of_event_by_stade(){
      f.append("status",status);
      f.append("event",event);
      f.append("saller",saller);
-    f.append("id",idTicket)
+    f.append("id",idTciekt);
+
     xhr.send(f);  
  }
+ var idTciekt=0
  function get_data_tickets(){
       if(!document.getElementById("dataTicket"))
         return 
@@ -1043,30 +1104,83 @@ function chart_number_of_event_by_stade(){
     xhr.onreadystatechange=function(){
         if(this.status==200 && this.readyState==4){
             var {type,message}=JSON.parse(this.responseText);
+            console.log(message)
             if(type=="success"){
+                chart_number_of_ticket_by_event()
                 $('#example').DataTable({
                     data: message,
                     columns: [
     
                         { data: "id" ,visible: false},
-                        { data: "parent_id" ,visible: false},
+                        { data: "saller_id" ,visible: false},
+                        { data: "event_id" ,visible: false},
     
                         { data: "name" ,
                             createdCell: function (td, cellData, rowData, row, col) {
                                 $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
                             }
                         },
-                        { data: "parent" ,
+                        { data: "saller" ,
                             createdCell: function (td, cellData, rowData, row, col) {
                                 $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
                             }
+                        },
+                        { data: "event" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }
+                        },
+                        { data: "date" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }
+                        },
+                        { data: "availble" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }, render: function (data, type, row) {
+                                // alert(JSON.stringify(row));
+                                if (row.availble==true)
+                                return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>In Stock</span>"
+                                if (row.availble==false)
+                                    return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #e76f51;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Sold Out</span>"
+    
+                                // return "<span></span>"
+                                // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
+                            }
+    
+                        },
+                        { data: "desired_price" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }
+                        },
+                        { data: "cost_price" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }
+                        },
+                        { data: "status" ,
+                            createdCell: function (td, cellData, rowData, row, col) {
+                                $(td).addClass('custom-td-class'); // Add a CSS class to the <td>
+                            }, render: function (data, type, row) {
+                                // alert(JSON.stringify(row));
+                                if (row.status=="Open")
+                                return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Open</span>"
+                                if (row.status=="Closed")
+                                    return  "<span style='margin: 1px;padding-bottom: 0px;background-color: #e76f51;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;' className='badge pb-1'>Closed</span>"
+    
+                                // return "<span></span>"
+                                // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
+                            }
+    
                         },
 
                         { data: null,   // No data binding for this column
                             orderable: false,  // Disable ordering for this column
                             render: function (data, type, row) {
                                 // alert(JSON(row))
-                                return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteCategory("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataCategory("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
+                                return "<span className='Icon Icon_delete' style='color: #d62828 !important;border-color: #d62828 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #d62828 !important;border-radius: 5px  !important;padding: 5px !important;'  onClick='deleteTicket("+row.id+")'><ion-icon   name='trash-outline'></ion-icon></span>&nbsp;            <span  className='Icon Icon_update' style='color: #f77f00 !important;border-color: #f77f00 !important;transition: .3s !important;cursor: pointer !important;    border: 1px solid #f77f00 !important;border-radius: 5px  !important;padding: 5px !important;' data-bs-toggle='modal' data-bs-target='#modelForm'  onClick='loadDataTicket("+JSON.stringify(row)+")'><ion-icon   name='pencil-outline' ></ion-icon></span>"
                                 // return '<button class="btn btn-primary" onclick="handleButtonClick(\'' + row.Name + '\')">Click Me</button>';
                             }}
                     ]          ,
@@ -1093,6 +1207,197 @@ function chart_number_of_event_by_stade(){
     f.append("event",document.getElementById("event_search").value);
     f.append("saller",document.getElementById("saller_search").value);
     f.append("csrfmiddlewaretoken",token)
-
     xhr.send(f);     
  }
+ function loadDemoDataTicket(){
+      document.getElementById("loadDemoData_Ticket").disabled=true;
+    var xhr=new XMLHttpRequest();
+
+    xhr.onreadystatechange=function(){
+       if(this.status==200 && this.readyState==4){
+           var {message,type}=JSON.parse(this.responseText);
+   
+           if(type=="success"){
+   toastr.success(message,type,{positionClass:"toast-bottom-right"});
+   document.getElementById("loadDemoData_Ticket").disabled=false;
+
+   get_data_tickets()
+           }
+           if(type=="warning"){
+               toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                           
+                       }
+       
+   
+       }
+    }
+    xhr.open("post","loadDemoDataTicket",true);
+    var f=new FormData();  
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+  
+ }
+ function deleteTicket(id){
+  var xhr=new XMLHttpRequest();
+xhr.onreadystatechange=function(){
+
+    if(this.status==200 && this.readyState==4){
+        var {message,type}=JSON.parse(this.responseText);
+
+        if(type=="success"){
+toastr.success(message,type,{positionClass:"toast-bottom-right"});
+            get_data_tickets()
+        }
+        if(type=="warning"){
+            toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                        
+                    }
+
+    }
+}
+xhr.open("POST","deleteTicket",true);
+var f=new FormData();
+f.append("id",id);
+f.append("csrfmiddlewaretoken",token)
+
+xhr.send(f)
+  
+ }
+
+ function loadDataTicket(data){
+    document.getElementById("name").value=data.name;
+    document.getElementById("date").value=data.date;
+    document.getElementById("availble").value=data.availble.toString().charAt(0).toUpperCase()+data.availble.toString().slice(1);
+    document.getElementById("desired_price").value=data.desired_price;
+    document.getElementById("cost_price").value=data.cost_price;
+    document.getElementById("status").value=data.status;
+    document.getElementById("event").value=data.event_id;
+    document.getElementById("saller").value=data.saller_id;
+    idTciekt=data.id
+ }
+
+
+
+ function chart_number_of_ticket_by_event(){
+    var xhr=new XMLHttpRequest();
+    xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            var {message,type}=JSON.parse(this.responseText);
+        
+            var labels=new Array();
+            var values=new Array();
+            for(i=0;i<message.length;i++){
+               labels.push(message[i]['name'])
+               values.push(message[i]['count'])
+            }
+            dataRedar = {
+               labels:labels,
+               datasets: [
+                   {
+                 label: 'Number of the Ticket by Event ',
+                 data: values,
+                 fill: true,
+                 backgroundColor: 
+                 [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 205, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(201, 203, 207, 0.2)'
+                ],
+                 borderColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)',
+                  'rgb(153, 102, 255)',
+                  'rgb(201, 203, 207)'
+                ],
+                 pointBackgroundColor: 'rgb(255, 99, 132)',
+                 pointBorderColor: '#fff',
+                 pointHoverBackgroundColor: '#fff',
+                 pointHoverBorderColor: 'rgb(255, 99, 132)'
+               }
+           ]
+             };
+             var configRedar = {
+               type: 'bar',
+               data: dataRedar,
+               options: {
+                  responsive: true, // Enable responsiveness
+                  maintainAspectRatio: false,
+          
+                 elements: {
+                   line: {
+                     borderWidth: 3
+                   }
+                 },
+                 scales: {
+                  yAxes: [{
+                      display: true,
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }            
+               },
+             };
+             
+             if(number_of_ticket_by_event!=null){
+               number_of_ticket_by_event.destroy();
+           }
+           // document.getElementById('number_of_ticket_by_event')
+           number_of_ticket_by_event = new Chart(document.getElementById("number_of_ticket_by_event"),configRedar);
+       //   }
+        }
+    }
+    xhr.open("post","chart_number_of_ticket_by_event",true)
+    var f=new FormData();
+    f.append("csrfmiddlewaretoken",token)
+    xhr.send(f);
+
+ 
+    }
+ //exeucter la fonction si en entre sur le dashboard
+ if(document.getElementById("number_of_ticket_by_event")!=null){
+    chart_number_of_ticket_by_event();
+ }
+ var number_of_ticket_by_event = null;
+
+ 
+ function get_data_home(){
+    if(!document.getElementById("data_home"))
+        return 
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        if(this.status==200 && this.readyState==4){
+            
+            var {type,message}=JSON.parse(this.responseText);
+            if(type=="success"){
+                var data={}
+                for(var i=0;i<message.length;i++){
+                    data[message[i]['category']]=[]
+                }
+                for(var i=0;i<message.length;i++){
+                    data[message[i]['category']].push(message[i])
+                }
+                console.log(data)
+            }
+            if(type=="warning"){
+                toastr.warning(message,type,{positionClass:"toast-bottom-right"});
+                            
+                        }
+        
+        }
+    }
+    xhr.open("POST","get_data_home",true);
+    var f=new FormData();
+    f.append("csrfmiddlewaretoken",token)
+
+    xhr.send(f);   
+
+}

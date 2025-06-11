@@ -20,10 +20,20 @@
 <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.6/js/dataTables.bootstrap5.js"></script>
 
-    
+   <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />   
 
 </head>
-<body onload="getParentCategory();get_data_category();get_data_stades();get_data_events();get_data_ticket();get_data_tickets();">
+<body onload="get_data_home();getParentCategory();get_data_category();get_data_stades();get_data_events();get_data_ticket();get_data_tickets();">
     <!-- le contenu qui sera modifié en fonction de l'url sélectionnée -->
     {% block content %} 
     {% endblock %}

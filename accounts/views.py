@@ -10,6 +10,8 @@ def signIn(request):
     return render(request,"SignIng.html")
 def login(request):
     return render(request,"login.html")
+def home(request):
+    return render(request,"home.html")
 
 def signInUser(request):
     first_name=request.POST['first_name']

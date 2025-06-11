@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+<!-- on appelle le base.html qui contient l'en-tête et le pied de page -->
+
+
+{% block content %}
+{% include "header.html" %}
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner text-white">
+          <div  class="carousel-item scrolTextContainer active pt-5">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+             <h1 class="display-4 fw-bolder titleDaisy">Figma Shop</h1>
+             <p class="lead titleDaisyLead">
+Don't miss out — grab your ticket today for an unforgettable experience now! </p>
+            </div>
+          <div  class="carousel-item scrolTextContainer pt-5">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <h1 class="display-4 fw-bolder titleDaisy">Figma Shop</h1>
+            <p class="lead titleDaisyLead">
+Limited seats available! Secure your spot before it's too late to join!            </p>
+         </div>
+          <div  class="carousel-item scrolTextContainer pt-5">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <h1 class="display-4 fw-bolder titleDaisy">FIGMA SHOP</h1>
+              <p class="lead titleDaisyLead">
+Be part of something amazing. Buy your ticket and celebrate with us soon!            </p>
+           </div>
+
+            <!-- <img src="http://127.0.0.1:8000/img/image3.jpg" class="d-block w-100" style="height:75vh;object-fit: cover;"  alt="..."> -->
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+            {% csrf_token %}
+
+<section id="data_home" class="py-3">
+  <div class="container">
+    <div class="row text-center">
+      
+      
+      
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide boxAnime">
+              <div class="card m-1">
+                <div class="card-body">
+      
+                  <div class="d-flex">
+                    <div class="card-text"><ion-icon class="iconService_1" name="globe-outline"></ion-icon></div>
+                    <div class="card-text mt-2 fw-bolder" style="margin-left: 5px">
+                      
+                      Association & ONG                      
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="text-start card-text">
+                    Solution ERP optimale pour gestion des donateurs, audits, rapports, collecte et transparence.
+                  </div>
+                </div>
+      
+      
+                </div>
+                
+              </div>    
+          
+            
+            <div class="swiper-slide boxAnime">
+              <div class="card m-1">
+                <div class="card-body">
+      
+                  <div class="d-flex">
+                    <div class="card-text"><ion-icon class="iconService_1" name="globe-outline"></ion-icon></div>
+                    <div class="card-text mt-2 fw-bolder" style="margin-left: 5px">
+                      
+                      Association & ONG                      
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="text-start card-text">
+                    Solution ERP optimale pour gestion des donateurs, audits, rapports, collecte et transparence.
+                  </div>
+                </div>
+      
+      
+                </div>
+                
+              </div>    
+              
+              
+                    
+      
+            
+            
+      
+      
+                </div>
+                
+              </div>    
+              
+              
+      
+               
+              
+              
+      
+                                          
+
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="swiper-pagination boxAnime"></div>
+      </div>
+  <div class="container">
+    <div class="row text-center">
+      
+      
+      
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide boxAnime">
+              <div class="card m-1">
+                <div class="card-body">
+      
+                  <div class="d-flex">
+                    <div class="card-text"><ion-icon class="iconService_1" name="globe-outline"></ion-icon></div>
+                    <div class="card-text mt-2 fw-bolder" style="margin-left: 5px">
+                      
+                      Association & ONG                      
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="text-start card-text">
+                    Solution ERP optimale pour gestion des donateurs, audits, rapports, collecte et transparence.
+                  </div>
+                </div>
+      
+      
+                </div>
+                
+              </div>    
+          
+            
+            <div class="swiper-slide boxAnime">
+              <div class="card m-1">
+                <div class="card-body">
+      
+                  <div class="d-flex">
+                    <div class="card-text"><ion-icon class="iconService_1" name="globe-outline"></ion-icon></div>
+                    <div class="card-text mt-2 fw-bolder" style="margin-left: 5px">
+                      
+                      Association & ONG                      
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="text-start card-text">
+                    Solution ERP optimale pour gestion des donateurs, audits, rapports, collecte et transparence.
+                  </div>
+                </div>
+      
+      
+                </div>
+                
+              </div>    
+              
+              
+                    
+      
+            
+            
+      
+      
+                </div>
+                
+              </div>    
+              
+              
+      
+               
+              
+              
+      
+                                          
+
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="swiper-pagination boxAnime"></div>
+      </div>
+       
+      <!-- Swiper JS -->
+            
+  </div>
+</section>
+
+        {% endblock %}

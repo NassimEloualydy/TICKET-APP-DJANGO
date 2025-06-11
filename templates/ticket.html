@@ -53,12 +53,12 @@
         <div class="row">
             <div class="col-md-12">
                <div class="card m-3">
-                    <div class="fw-bolder m-3">Number Events By Stade</div>
+                    <div class="fw-bolder m-3">Number Ticket By Event</div>
                     
                     
                     <div class="card-body">
                         <div id="id_chart_nbr_sms_par_compagne">
-                            <canvas height="290" id="number_of_event_by_stade"></canvas>                            
+                            <canvas height="290" id="number_of_ticket_by_event"></canvas>                            
 
                         </div>
                     </div>
@@ -96,10 +96,10 @@
           <input
           type="button"
           
-          id="loadDemoData_Event"
+          id="loadDemoData_Ticket"
           value="Load Demo Data"
           class="btn btn-dark"
-          onclick="loadDemoDataEvent()"
+          onclick="loadDemoDataTicket()"
         />
 
         </div>
@@ -115,7 +115,7 @@
             class="btn-close"
             aria-label="close"
             data-bs-dismiss="modal"
-            onClick="clearDataEvent()"
+            onClick="clearDataTicket()"
           ></button>
         </div>
         <div class="modal-body">
@@ -226,15 +226,17 @@
         <table id="example" class="table">
             <thead>
                 <tr>
-                    <th class="text-start">Id</th>
+                    <th class="text-start">id</th>
+                    <th class="text-start">saller_id</th>
+                    <th class="text-start">event_id</th>
                     <th class="text-start">Name</th>
+                    <th class="text-start">Saller</th>
+                    <th class="text-start">Event</th>
                     <th class="text-start">Date</th>
-                    <th class="text-start">Start</th>
-                    <th class="text-start">End</th>
-                    <th class="text-start">N.Ticket</th>
+                    <th class="text-start">Availability</th>
+                    <th class="text-start">Desired Price</th>
+                    <th class="text-start">Cost Price</th>
                     <th class="text-start">State</th>
-                    <th class="text-start">Stade</th>
-                    <th class="text-start">Category</th>
 
                     <th class="text-start" style="width: 180px;">&nbsp;&nbsp;&nbsp;</th>
 
