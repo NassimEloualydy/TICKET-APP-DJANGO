@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+<!-- on appelle le base.html qui contient l'en-tête et le pied de page -->
+
+
+{% block content %}
+{% include "header.html" %}
+
+
+<section  class="bg-dark text-light p-5 text-center Header">
+    <div class="container border border-white pb-3 rounded-3">
+        <div class="p-2">
+            <h3 class="titleDaisyLead fw-bolder">{{ event.name }}</h3>
+            <!-- declaration de token -->
+            {% csrf_token %}
+        </div>
+    </div>
+</section>
+<section id="breadcrumb" class="mt-3 ml-5 text-center">
+
+        
+    <nav aria-label="breadcrumb" style="margin-left: 3%;">
+        <ol class="breadcrumb">
+        <ul onclick="window.location.href='/'" class="br-click breadcrumb-item">Home</ul>
+        <ul  class="breadcrumb-item active">{{event.name}}</ul>                        
+        </ol>
+    </nav>
+    <hr style="width: 90%;margin-left: 5%;"/>
+</section>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6">
+    <div class="row">        
+        <div class="col-md card m-1" style="position:relative;cursor:pointer;"><div class="card-body">
+            <div class="d-flex">
+                <div class="card-text mt-2 fw-bolder h5" style="margin-left: 5px">
+                    🏟️ Stade : {{stade.name}}
+                    
+                    
+                    <span style="margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;position:absolute;top:5px;right:5px;" classname="badge pb-1">{{stade.status}}</span></div></div><hr>
+                    <div class="text-start card-text">
+                    <br>🌆 <span class="fw-bold">City</span> : {{stade.city}}                          
+                    <br>🗺️ <span class="fw-bold">Country</span> : {{stade.country}}                          
+                    <br>📍<span class="fw-bold">Location</span> : {{stade.location}}                       
+                    <br> 🔢 <span class="fw-bold">Places</span> : {{stade.nbr_places}}                 
+                </div></div></div>
+    </div>
+        </div>
+        <div class="col-md-6">
+    <div class="row">        
+        <div class="col-md card m-1" style="position:relative;cursor:pointer;"><div class="card-body">
+            <div class="d-flex">
+                <div class="card-text mt-2 fw-bolder h5" style="margin-left: 5px">
+                    🎉 Event 
+                    <span style="margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;position:absolute;top:5px;right:5px;" classname="badge pb-1">{{event.state}}</span></div></div><hr>
+                    <div class="text-start card-text">
+                    <br>📅 <span class="fw-bold">Date</span> : {{event.date}}                          
+                    <br>🕒 <span class="fw-bold">Time</span> : {{event.time_start}} - {{event.time_end}}                      
+                </div></div>
+            
+            </div>
+    </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

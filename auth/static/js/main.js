@@ -787,6 +787,7 @@ function chart_number_of_staduims_by_city(){
 
  }
  function submitEvent(){
+
     var name=document.getElementById("name").value;
     var date=document.getElementById("date").value;
     var start=document.getElementById("start").value;
@@ -1372,6 +1373,7 @@ xhr.send(f)
  function get_data_home(){
     if(!document.getElementById("data_home"))
         return 
+    var name=document.getElementById("name_search").value;
     var xhr=new XMLHttpRequest();
     xhr.onreadystatechange=function(){
         if(this.status==200 && this.readyState==4){
@@ -1385,7 +1387,90 @@ xhr.send(f)
                 for(var i=0;i<message.length;i++){
                     data[message[i]['category']].push(message[i])
                 }
-                console.log(data)
+
+            data_query=""
+             for(var i in data){
+data_query+="<div class='container mt-3'>"
+data_query+="<div class='d-flex justify-content-between'>"
+data_query+="<p class='fw-bold h3'>"+i+"</p>"
+// data_query+="<p class='fw-bold h3'><input type='button' value='View More' class='btn btn-dark'></p>"
+data_query+="</div>"
+data_query+="<div class='row'>"
+
+k=0
+for(var j of data[i]){
+    k++
+    if(k==5)
+        break
+data_query+="<div class='col-md card m-1'  style='position:relative;cursor:pointer;' onclick='ticketDetail("+j.id+")'>"
+data_query+="<div class='card-body'>"
+data_query+="<div class='d-flex'>"
+data_query+="<div class='card-text mt-2 fw-bolder' style='margin-left: 5px'>"
+data_query+=j.name
+if(j.state=="Open"){
+
+    data_query+="<span style='margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;position:absolute;top:5px;right:5px;' className='badge pb-1'>Open</span>"
+}
+else{
+
+    data_query+="<span style='margin: 1px;padding-bottom: 0px;background-color: #e76f51;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;position:absolute;top:5px;right:5px;' className='badge pb-1'>Closed</span>"
+}
+data_query+="</div>"
+data_query+="</div>"
+data_query+="<hr>"
+data_query+="<div class='text-start card-text'>"
+data_query+="<br/>🏟️ <span class='fw-bold'>Stade</span> : "+j.stade+"                  "
+data_query+="<br/>📅 <span class='fw-bold'>Date</span> : "+j.date+"                          "
+data_query+="<br/>🕒 <span class='fw-bold'>Time</span> : "+j.time_start+" - "+j.time_end+"                       "
+data_query+="<br/>🎟️ <span class='fw-bold'>Tickets</span> : "+j.nbr_ticket+" available                 "
+data_query+="</div>"
+data_query+="</div>"
+data_query+="</div>"
+    
+}
+data_query+="</div>"
+data_query+="<div class='row'>"
+
+k=0
+for(var j of data[i]){
+    k++
+    if(k<5)
+        continue
+    if(k==9)
+    break
+data_query+="<div class='col-md card m-1'  style='position:relative;cursor:pointer;' onclick='ticketDetail("+j.id+")'>"
+data_query+="<div class='card-body'>"
+data_query+="<div class='d-flex'>"
+data_query+="<div class='card-text mt-2 fw-bolder' style='margin-left: 5px'>"
+data_query+=j.name
+if(j.state=="Open"){
+
+    data_query+="<span style='margin: 1px;padding-bottom: 0px;background-color: #2a9d8f;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;position:absolute;top:5px;right:5px;' className='badge pb-1'>Open</span>"
+}
+else{
+
+    data_query+="<span style='margin: 1px;padding-bottom: 0px;background-color: #e76f51;display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25rem;position:absolute;top:5px;right:5px;' className='badge pb-1'>Closed</span>"
+}
+
+data_query+="</div>"
+data_query+="</div>"
+data_query+="<hr>"
+data_query+="<div class='text-start card-text'>"
+data_query+="<br/>🏟️ <span class='fw-bold'>Stade</span> : "+j.stade+"                  "
+data_query+="<br/>📅 <span class='fw-bold'>Date</span> : "+j.date+"                          "
+data_query+="<br/>🕒 <span class='fw-bold'>Time</span> : "+j.time_start+" - "+j.time_end+"                       "
+data_query+="<br/>🎟️ <span class='fw-bold'>Tickets</span> : "+j.nbr_ticket+" available                 "
+data_query+="</div>"
+data_query+="</div>"
+data_query+="</div>"
+    
+}
+data_query+="</div>"
+data_query+="</div>"
+
+            }
+            // console.log(data_query)
+            document.getElementById("data_home").innerHTML=data_query
             }
             if(type=="warning"){
                 toastr.warning(message,type,{positionClass:"toast-bottom-right"});
@@ -1397,7 +1482,10 @@ xhr.send(f)
     xhr.open("POST","get_data_home",true);
     var f=new FormData();
     f.append("csrfmiddlewaretoken",token)
-
+    f.append("name",name)
     xhr.send(f);   
 
+}
+function ticketDetail(data){
+    window.location.href="ticketDetail/"+data
 }

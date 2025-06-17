@@ -200,16 +200,29 @@ def chart_number_of_ticket_by_event(request):
 def get_data_home(request):
     if request.session.get('first_name',None) is None:
              return JsonResponse({"type":"warning","message":"Unautorized User !!"})
+    name=request.POST['name']
     query="""
     select e.id,e.name,e.date,e.time_start,e.time_end,e.nbr_ticket,e.state,s.name as stade,c.name as category
     from public."Event_event" e 
     inner join public.stades_stade s on s.id=e.stade_id
     inner join public.category_category c on c.id=e.category_id
+    where e.name like %s or cast(e.date as text) like %s or 
+    cast(e.date as text) like %s or cast(e.time_start as text) like %s
+    or cast(e.time_end as text) like %s or e.state like %s or s.name like %s or c.name like %s
+
     
 """
     cursor=connection.cursor()
     cursor.execute(query,
                 (
+                         '%'+name+'%',
+                         '%'+name+'%',
+                         '%'+name+'%',
+                         '%'+name+'%',
+                         '%'+name+'%',
+                         '%'+name+'%',
+                         '%'+name+'%',
+                         '%'+name+'%',
 
                 )
                 )
@@ -218,7 +231,20 @@ def get_data_home(request):
     columns = [col[0] for col in cursor.description]
     data = [dict(zip(columns, row)) for row in rows]
     data_category=[]
+
     for rec in data:
-        rec['nbr_ticket']=str(len(Ticket.objects.filter(event=rec['id'])))  
+        if len(Ticket.objects.filter(event=rec['id']))==0:
+             continue
+        if len(Ticket.objects.filter(event=rec['id']))>0:
+            rec['nbr_ticket']=str(len(Ticket.objects.filter(event=rec['id'])))  
+            data_category.append(rec)
          
-    return JsonResponse({"type":"success","message":data})
+    return JsonResponse({"type":"success","message":data_category})
+def ticketDetail(request,id):
+         e=Event.objects.filter(pk=id).first()
+         return render(request,"ticketDetail.html",{
+              "event":e,
+              "stade":e.stade
+         })
+
+     

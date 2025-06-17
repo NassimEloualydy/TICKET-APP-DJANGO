@@ -9,5 +9,6 @@ urlpatterns=[
        path("loadDemoDataTicket",views.loadDemoDataTicket,name="loadDemoDataTicket"),
        path('deleteTicket',views.deleteTicket,name="deleteTicket"),
        path("chart_number_of_ticket_by_event",views.chart_number_of_ticket_by_event,name="chart_number_of_ticket_by_event"),
-       path("get_data_home",views.get_data_home,name="get_data_home")
+       path("get_data_home",views.get_data_home,name="get_data_home"),
+       path("ticketDetail/<int:id>",views.ticketDetail,name="ticketDetail")
 ]
